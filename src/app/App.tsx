@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Sidenav, ToppAppBar } from './components';
+import { Sidenav, TopAppBar } from '../components';
 import { APP_DRAWER_WIDTH } from './App.constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const App = (props: any) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <ToppAppBar
+      <TopAppBar
         handleDrawerToggle={handleDrawerToggle}
         drawerWidth={APP_DRAWER_WIDTH}
       />
