@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import pageReducer from '../components/Page/pageSlice';
-import counterReducer from '../features/counter/counterSlice';
+import taskListReducer from '../Task/taskListSlice';
 
 const rootReducer = combineReducers({
   page: pageReducer,
-  counter: counterReducer,
+  taskList: taskListReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

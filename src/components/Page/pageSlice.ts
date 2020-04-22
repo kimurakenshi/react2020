@@ -15,10 +15,11 @@ export const pageSlice = createSlice({
   name: 'page',
   initialState,
   reducers: {
-    setIsFetching: (state, action) => {
+    setIsFetching: (state, action: PayloadAction<boolean>) => {
       state.isFetching = action.payload;
     },
-    setError: (state, action) => {
+    setError: (state, action: PayloadAction<string>) => {
+      state.isFetching = false;
       state.error = action.payload;
     },
   },
