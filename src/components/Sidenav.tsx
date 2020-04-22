@@ -9,6 +9,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { APP_ROUTES } from '../Router';
 
 const useStyles = makeStyles((theme: Theme) => ({
   drawer: (drawerWidth: number) => ({
@@ -31,6 +33,7 @@ interface SidenavProps {
 }
 
 const Sidenav = ({ isOpen, handleDrawerToggle, drawerWidth }: SidenavProps) => {
+  const history = useHistory();
   const classes = useStyles(drawerWidth);
   const theme = useTheme();
 
@@ -39,13 +42,13 @@ const Sidenav = ({ isOpen, handleDrawerToggle, drawerWidth }: SidenavProps) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button onClick={() => history.push(APP_ROUTES.HOME)}>
           <ListItemIcon>
             <ListAltIcon />
           </ListItemIcon>
           <ListItemText primary="Tasks" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => history.push(APP_ROUTES.ABOUT)}>
           <ListItemIcon>
             <HelpOutlineIcon />
           </ListItemIcon>
