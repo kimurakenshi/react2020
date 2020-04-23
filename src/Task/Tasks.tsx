@@ -14,12 +14,17 @@ import {
 } from '@material-ui/core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeleteIcon from '@material-ui/icons/Delete';
-import DoneIcon from '@material-ui/icons/Done';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import RestoreIcon from '@material-ui/icons/Restore';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   list: {
     backgroundColor: theme.palette.background.paper,
+  },
+  completedTask: {
+    textDecoration: 'line-through',
   },
 }));
 
@@ -42,10 +47,17 @@ const Tasks = () => {
                 <ListItem key={task.id}>
                   <ListItemAvatar>
                     <Avatar>
-                      <AssignmentIcon />
+                      {task.isCompleted ? (
+                        <AssignmentTurnedInIcon />
+                      ) : (
+                        <AssignmentIcon />
+                      )}
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary={task.name} />
+                  <ListItemText
+                    className={task.isCompleted ? styles.completedTask : ''}
+                    primary={task.name}
+                  />
                   <ListItemSecondaryAction>
                     <IconButton
                       edge="end"
@@ -54,13 +66,24 @@ const Tasks = () => {
                     >
                       <DeleteIcon />
                     </IconButton>
-                    <IconButton
-                      edge="end"
-                      aria-label="complete"
-                      color="primary"
-                    >
-                      <DoneIcon />
-                    </IconButton>
+                    {!task.isCompleted && (
+                      <IconButton
+                        edge="end"
+                        aria-label="complete"
+                        color="primary"
+                      >
+                        <CheckCircleIcon />
+                      </IconButton>
+                    )}
+                    {task.isCompleted && (
+                      <IconButton
+                        edge="end"
+                        aria-label="restore"
+                        color="primary"
+                      >
+                        <RestoreIcon />
+                      </IconButton>
+                    )}
                   </ListItemSecondaryAction>
                 </ListItem>
                 {index < taskList.length - 1 && <Divider component="li" />}
