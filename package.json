@@ -16,6 +16,7 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.4",
     "classnames": "^2.2.6",
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -24,10 +25,14 @@
     "typescript": "~3.8.2"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-server": "cross-env-shell webpack --config webpack.server.config.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "yarn build-server && concurrently \"yarn start-dev-client\" \"yarn start-dev-server\" \"yarn watch-dev-server\"",
+    "watch-dev-server": "chokidar \"./server/**/*.ts\" -c \"yarn build-server\"",
+    "start-dev-client": "cross-env PORT=3000 yarn react-scripts start",
+    "start-dev-server": "kill-port --port 9229 && cross-env NODE_ENV=development nodemon --inspect ./dist/server/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,15 +50,25 @@
     ]
   },
   "devDependencies": {
+    "@types/express": "^4.17.6",
     "@types/webpack-env": "^1.15.1",
+    "chokidar-cli": "^2.1.0",
+    "concurrently": "^5.1.0",
+    "cross-env": "^7.0.2",
     "husky": "^4.2.5",
+    "kill-port": "^1.6.0",
+    "nodemon": "^2.0.3",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "sass": "^1.26.3"
+    "sass": "^1.26.3",
+    "ts-loader": "^7.0.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-node-externals": "^1.7.2"
   },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

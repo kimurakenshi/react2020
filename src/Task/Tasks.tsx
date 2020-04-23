@@ -15,7 +15,9 @@ const Tasks = () => {
     <Page>
       {' '}
       <h1>Tasks</h1>
-      <ul>{taskList && taskList.map((task) => <li>{task.name}</li>)}</ul>
+      <ul>
+        {taskList && taskList.map((task) => <li key={task.id}>{task.name}</li>)}
+      </ul>
     </Page>
   );
 };
