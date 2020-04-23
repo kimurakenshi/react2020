@@ -12,12 +12,14 @@ import {
   ListItemSecondaryAction,
   ListItemText,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RestoreIcon from '@material-ui/icons/Restore';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { makeStyles } from '@material-ui/core/styles';
+import { AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -39,10 +41,10 @@ const Tasks = () => {
 
   return (
     <Page title="Tasks">
-      <div className={styles.list}>
-        <List>
-          {taskList &&
-            taskList.map((task, index) => (
+      {taskList && taskList.length > 0 ? (
+        <div className={styles.list}>
+          <List>
+            {taskList.map((task, index) => (
               <>
                 <ListItem key={task.id}>
                   <ListItemAvatar>
@@ -89,8 +91,13 @@ const Tasks = () => {
                 {index < taskList.length - 1 && <Divider component="li" />}
               </>
             ))}
-        </List>
-      </div>
+          </List>
+        </div>
+      ) : (
+        <Alert variant="filled" severity="info">
+          You currently don't have any tasks in your list.
+        </Alert>
+      )}
     </Page>
   );
 };
