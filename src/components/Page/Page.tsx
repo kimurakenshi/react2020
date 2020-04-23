@@ -1,14 +1,18 @@
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { selectError, selectIsFetching } from './pageSlice';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 interface PageProps {
   children: ReactNode;
+  title: string;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  title: {
+    marginBottom: theme.spacing(2),
+  },
   error: {
     color: 'red',
     textAlign: 'center',
@@ -22,7 +26,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Page = ({ children }: PageProps) => {
+const Page = ({ children, title }: PageProps) => {
   const styles = useStyles();
   const isFetching = useSelector(selectIsFetching);
   const error = useSelector(selectError);
@@ -38,12 +42,19 @@ const Page = ({ children }: PageProps) => {
   if (error) {
     return (
       <div className={styles.error}>
-        <p>{error}</p>
+        <Typography color="error">{error}</Typography>
       </div>
     );
   }
 
-  return <>{children}</>;
+  return (
+    <Container>
+      <Typography variant="h4" component="h1" className={styles.title}>
+        {title}
+      </Typography>
+      {children}
+    </Container>
+  );
 };
 
 export default Page;

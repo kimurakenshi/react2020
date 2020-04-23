@@ -12,9 +12,7 @@ const Tasks = () => {
   }, [dispatch]);
 
   return (
-    <Page>
-      {' '}
-      <h1>Tasks</h1>
+    <Page title="Tasks">
       <ul>
         {taskList && taskList.map((task) => <li key={task.id}>{task.name}</li>)}
       </ul>

@@ -1,10 +1,6 @@
 import React from 'react';
 import { Page } from '../components';
 
-const About = () => (
-  <Page>
-    <h1>About</h1>
-  </Page>
-);
+const About = () => <Page title="About">Something here</Page>;
 
 export default About;
