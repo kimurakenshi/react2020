@@ -9,7 +9,7 @@ const Tasks = () => {
 
   useEffect(() => {
     dispatch(fetchTasks());
-  });
+  }, [dispatch]);
 
   return (
     <Page>

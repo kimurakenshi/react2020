@@ -1,6 +1,5 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Sidenav, TopAppBar } from '../components';
 import { APP_DRAWER_WIDTH } from './App.constants';
@@ -10,6 +9,7 @@ import { AppRouter } from '../Router';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    height: '100%',
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -42,9 +42,7 @@ const App = (props: any) => {
         />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography paragraph>
-            <AppRouter />
-          </Typography>
+          <AppRouter />
         </main>
       </div>
     </BrowserRouter>

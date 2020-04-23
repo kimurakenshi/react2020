@@ -3,6 +3,7 @@ import { AppThunk } from '../App/store';
 import { RootState } from '../App/rootReducer';
 import { setIsFetching, setError } from '../components/Page/pageSlice';
 import { fetchJSON } from '../core/data';
+import { API_ROUTES } from '../core/data';
 
 interface Task {
   id: string;
@@ -36,7 +37,9 @@ export const { getTasksSuccess, getTasksError } = taskListSlice.actions;
 export const fetchTasks = (): AppThunk => async (dispatch) => {
   try {
     dispatch(setIsFetching(true));
-    const tasks = await fetchJSON();
+    const tasks = await fetchJSON(API_ROUTES.TASKS, {
+      method: 'POST',
+    });
     // @ts-ignore
     dispatch(getTasksSuccess(tasks));
     dispatch(setIsFetching(false));
