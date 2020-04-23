@@ -1,37 +1,17 @@
 import express from 'express';
 
-import BaseError from '../error/error.base';
+import { TASK_ROUTES } from './task.constants';
+import taskListController from './task-list.controller';
+import taskCreateController from './task-create.controller';
+import taskUpdateController from './task-update.controller';
+import taskDeleteController from './task-delete.controller';
 
 const router = express.Router();
 
-router.post(
-  '',
-  async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    try {
-      // const { searchText, recordType, maxResults, sortCriteria } = req.body;
-
-      // call task service here.
-
-      res.status(200).json([
-        {
-          id: 1,
-          name: 'Task 1',
-          isCompleted: false,
-        },
-        {
-          id: 2,
-          name: 'Task 2',
-          isCompleted: true,
-        },
-      ]);
-    } catch (e) {
-      next(new BaseError({ code: e.code, message: e.message }, e.statusCode));
-    }
-  }
-);
+// Order matters here so don't change them unless you know what you are doing.
+router.use(TASK_ROUTES.LIST, taskListController);
+router.use(TASK_ROUTES.TASK, taskCreateController);
+router.use(TASK_ROUTES.TASK, taskUpdateController);
+router.use(TASK_ROUTES.TASK, taskDeleteController);
 
 export default router;

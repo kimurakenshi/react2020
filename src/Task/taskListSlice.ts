@@ -37,7 +37,7 @@ export const { getTasksSuccess, getTasksError } = taskListSlice.actions;
 export const fetchTasks = (): AppThunk => async (dispatch) => {
   try {
     dispatch(setIsFetching(true));
-    const tasks = await fetchJSON(API_ROUTES.TASKS, {
+    const tasks = await fetchJSON(API_ROUTES.TASK_LIST, {
       method: 'POST',
     });
     // @ts-ignore

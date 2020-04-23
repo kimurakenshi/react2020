@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
 app.use(API_ROUTES.ALL, allController);
-app.use(API_ROUTES.TASKS, taskController);
+app.use(API_ROUTES.TASK, taskController);
 
 // ERROR MIDDLEWARE
 // @ts-ignore

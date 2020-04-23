@@ -1,4 +1,5 @@
 export const API_ROUTES = {
   ALL: '*',
-  TASKS: '/api/tasks',
+  TASK: '/api/task',
+  TASK_LIST: '/api/task/list',
 };
