@@ -22,6 +22,11 @@ router.post(
           name: 'Task 1',
           isCompleted: false,
         },
+        {
+          id: 2,
+          name: 'Task 2',
+          isCompleted: true,
+        },
       ]);
     } catch (e) {
       next(new BaseError({ code: e.code, message: e.message }, e.statusCode));
