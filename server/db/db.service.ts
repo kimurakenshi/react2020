@@ -61,7 +61,7 @@ export const createTask = (taskName: string) => {
   return newTask;
 };
 
-export const updateTask = (taskId, taskInfo) => {
+export const updateTask = (taskId, isCompleted: boolean) => {
   const dbData = getDB();
 
   const taskToUpdate = dbData.find((task) => task.id === taskId);
@@ -70,8 +70,7 @@ export const updateTask = (taskId, taskInfo) => {
     throw new Error("The task to update doesn't exist.");
   }
 
-  taskToUpdate.name = taskInfo.name;
-  taskToUpdate.isCompleted = taskInfo.isCompleted;
+  taskToUpdate.isCompleted = isCompleted;
 
   persistChanges(dbData);
 

@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { Page } from '../components';
-import { fetchTasks, selectTasks } from './taskManagerSlice';
+import { fetchTasks, selectTasks, updateTaskStatus } from './taskManagerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Divider,
@@ -40,6 +40,10 @@ const Tasks = () => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
+  const updateTaskStatusHandler = (taskId: string, isCompleted: boolean) => {
+    dispatch(updateTaskStatus(taskId, isCompleted));
+  };
+
   return (
     <Page title="Tasks">
       <Typography variant="h6">Create Task</Typography>
@@ -76,6 +80,7 @@ const Tasks = () => {
                         edge="end"
                         aria-label="complete"
                         color="primary"
+                        onClick={() => updateTaskStatusHandler(task.id, true)}
                       >
                         <CheckCircleIcon />
                       </IconButton>
@@ -85,6 +90,7 @@ const Tasks = () => {
                         edge="end"
                         aria-label="restore"
                         color="primary"
+                        onClick={() => updateTaskStatusHandler(task.id, false)}
                       >
                         <RestoreIcon />
                       </IconButton>

@@ -14,7 +14,7 @@ router.put(
   ) => {
     try {
       const { taskId } = req.params;
-      const updatedTask = updateTask(taskId, req.body);
+      const updatedTask = updateTask(taskId, req.body.isCompleted);
 
       res.status(200).json(updatedTask);
     } catch (e) {

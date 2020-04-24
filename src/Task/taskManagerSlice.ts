@@ -37,6 +37,16 @@ export const taskManagerSlice = createSlice({
     getCreateTaskSuccess: (state, action: PayloadAction<Task>) => {
       state.tasks.push(action.payload);
     },
+    getUpdateTaskSuccess: (state, action: PayloadAction<Task>) => {
+      const taskToUpdate = state.tasks.find(
+        (task) => task.id === action.payload.id
+      );
+
+      if (taskToUpdate) {
+        taskToUpdate.name = action.payload.name;
+        taskToUpdate.isCompleted = action.payload.isCompleted;
+      }
+    },
   },
 });
 
@@ -44,6 +54,7 @@ export const {
   getTasksSuccess,
   getTasksError,
   getCreateTaskSuccess,
+  getUpdateTaskSuccess,
 } = taskManagerSlice.actions;
 
 export const fetchTasks = (): AppThunk => async (dispatch) => {
@@ -76,6 +87,28 @@ export const createTask = (name: string): AppThunk => async (dispatch) => {
         message: `${name} was created successfully.`,
       })
     );
+  } catch (err) {
+    dispatch(
+      setPageNotification({
+        type: NotificationType.ERROR,
+        message: err.message,
+      })
+    );
+  }
+};
+
+export const updateTaskStatus = (
+  taskId: string,
+  isCompleted: boolean
+): AppThunk => async (dispatch) => {
+  try {
+    const tasks = await fetchJSON(`${API_ROUTES.TASK}/${taskId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        isCompleted,
+      }),
+    });
+    dispatch(getUpdateTaskSuccess(tasks));
   } catch (err) {
     dispatch(
       setPageNotification({
