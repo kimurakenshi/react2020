@@ -1,6 +1,7 @@
 import express from 'express';
 
 import BaseError from '../error/error.base';
+import { createTask } from '../db';
 
 const router = express.Router();
 
@@ -12,11 +13,11 @@ router.post(
     next: express.NextFunction
   ) => {
     try {
-      // const { searchText, recordType, maxResults, sortCriteria } = req.body;
+      const { name } = req.body;
 
-      // call task service here.
+      const newTask = createTask(name);
 
-      res.status(200).json({ op: 'Create' });
+      res.status(200).json(newTask);
     } catch (e) {
       next(new BaseError({ code: e.code, message: e.message }, e.statusCode));
     }

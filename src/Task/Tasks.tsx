@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { Page } from '../components';
 import { fetchTasks, selectTasks } from './taskListSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +19,6 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RestoreIcon from '@material-ui/icons/Restore';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { makeStyles } from '@material-ui/core/styles';
-import { AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -45,8 +44,8 @@ const Tasks = () => {
         <div className={styles.list}>
           <List>
             {taskList.map((task, index) => (
-              <>
-                <ListItem key={task.id}>
+              <Fragment key={task.id}>
+                <ListItem>
                   <ListItemAvatar>
                     <Avatar>
                       {task.isCompleted ? (
@@ -89,7 +88,7 @@ const Tasks = () => {
                   </ListItemSecondaryAction>
                 </ListItem>
                 {index < taskList.length - 1 && <Divider component="li" />}
-              </>
+              </Fragment>
             ))}
           </List>
         </div>

@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Order matters here so don't change them unless you know what you are doing.
 router.use(TASK_ROUTES.LIST, taskListController);
-router.use(TASK_ROUTES.TASK, taskCreateController);
+router.use(TASK_ROUTES.TASK_CREATE, taskCreateController);
 router.use(TASK_ROUTES.TASK, taskUpdateController);
 router.use(TASK_ROUTES.TASK, taskDeleteController);
 

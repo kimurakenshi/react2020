@@ -7,7 +7,6 @@ import { taskController } from './task';
 
 const app = express();
 
-app.use(express.static(path.resolve('dist', 'client')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
