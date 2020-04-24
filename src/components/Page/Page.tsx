@@ -1,8 +1,20 @@
 import React, { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
-import { selectError, selectIsFetching } from './pageSlice';
-import { CircularProgress, Container, Typography } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  NotificationType,
+  resetPageNotification,
+  selectError,
+  selectIsFetching,
+  selectNotification,
+} from './pageSlice';
+import {
+  CircularProgress,
+  Container,
+  Snackbar,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Alert } from '@material-ui/lab';
 
 interface PageProps {
   children: ReactNode;
@@ -28,8 +40,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Page = ({ children, title }: PageProps) => {
   const styles = useStyles();
+  const dispatch = useDispatch();
   const isFetching = useSelector(selectIsFetching);
   const error = useSelector(selectError);
+  const notification = useSelector(selectNotification);
+
+  const handleNotificationClose = (
+    event?: React.SyntheticEvent,
+    reason?: string
+  ) => {
+    dispatch(resetPageNotification());
+  };
 
   if (isFetching) {
     return (
@@ -52,7 +73,22 @@ const Page = ({ children, title }: PageProps) => {
       <Typography variant="h4" component="h1" className={styles.title}>
         {title}
       </Typography>
+
       {children}
+
+      {notification && (
+        <Snackbar
+          open={!!notification}
+          onClose={handleNotificationClose}
+          autoHideDuration={
+            notification.type !== NotificationType.ERROR ? 3000 : null
+          }
+        >
+          <Alert onClose={handleNotificationClose} severity={notification.type}>
+            {notification.message}
+          </Alert>
+        </Snackbar>
+      )}
     </Container>
   );
 };

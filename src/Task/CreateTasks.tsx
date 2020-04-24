@@ -1,19 +1,8 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Snackbar,
-  TextField,
-} from '@material-ui/core';
+import { Box, Button, FormControl, TextField } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  createTask,
-  selectHasCreationError,
-  getHasCreateTaskError,
-} from './taskListSlice';
-import { Alert } from '@material-ui/lab';
+import { useDispatch } from 'react-redux';
+import { createTask } from './taskListSlice';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateTask = () => {
   const dispatch = useDispatch();
-  const hasCreationError = useSelector(selectHasCreationError);
   const styles = useStyles();
   const taskNameRef = useRef<HTMLInputElement>();
   const [hasError, setHasError] = React.useState(false);
@@ -56,10 +44,6 @@ const CreateTask = () => {
     }
   };
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    dispatch(getHasCreateTaskError(false));
-  };
-
   return (
     <Box border={1} borderColor="grey.500" className={styles.container}>
       <form
@@ -80,11 +64,6 @@ const CreateTask = () => {
           Create
         </Button>
       </form>
-      <Snackbar open={hasCreationError} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          There was an error while trying to create a task.
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

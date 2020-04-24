@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../App/store';
 import { RootState } from '../App/rootReducer';
-import { setIsFetching, setError } from '../components/Page/pageSlice';
+import {
+  setIsFetching,
+  setError,
+  setPageNotification,
+  NotificationType,
+} from '../components/Page/pageSlice';
 import { fetchJSON } from '../core/data';
 import { API_ROUTES } from '../core/data';
 
@@ -13,12 +18,10 @@ interface Task {
 
 interface TaskListState {
   tasks: Task[];
-  hasCreationError: boolean;
 }
 
 const initialState: TaskListState = {
   tasks: [],
-  hasCreationError: false,
 };
 
 export const taskListSlice = createSlice({
@@ -34,9 +37,6 @@ export const taskListSlice = createSlice({
     getCreateTaskSuccess: (state, action: PayloadAction<Task>) => {
       state.tasks.push(action.payload);
     },
-    getHasCreateTaskError: (state, action: PayloadAction<boolean>) => {
-      state.hasCreationError = action.payload;
-    },
   },
 });
 
@@ -44,7 +44,6 @@ export const {
   getTasksSuccess,
   getTasksError,
   getCreateTaskSuccess,
-  getHasCreateTaskError,
 } = taskListSlice.actions;
 
 export const fetchTasks = (): AppThunk => async (dispatch) => {
@@ -71,13 +70,22 @@ export const createTask = (name: string): AppThunk => async (dispatch) => {
       }),
     });
     dispatch(getCreateTaskSuccess(tasks));
+    dispatch(
+      setPageNotification({
+        type: NotificationType.SUCCESS,
+        message: `${name} was created successfully.`,
+      })
+    );
   } catch (err) {
-    dispatch(getHasCreateTaskError(true));
+    dispatch(
+      setPageNotification({
+        type: NotificationType.ERROR,
+        message: err.message,
+      })
+    );
   }
 };
 
 export const selectTasks = (state: RootState) => state.taskList.tasks;
-export const selectHasCreationError = (state: RootState) =>
-  state.taskList.hasCreationError;
 
 export default taskListSlice.reducer;
