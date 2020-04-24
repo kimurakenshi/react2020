@@ -1,12 +1,7 @@
 [
   {
-    "name": "this is another task",
-    "isCompleted": false,
-    "id": "725f4e57-58a8-4eff-8ec7-9cd3cae0f977"
-  },
-  {
     "name": "asd",
-    "isCompleted": false,
-    "id": "1d457e74-c87c-4f78-8fa9-dc166a0617e6"
+    "id": "72a3b902-558e-44af-9f6b-8b5cd51d3c45",
+    "isCompleted": false
   }
 ]

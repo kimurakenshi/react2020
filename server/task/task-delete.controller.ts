@@ -2,6 +2,7 @@ import express from 'express';
 
 import BaseError from '../error/error.base';
 import { deleteTask } from '../db';
+import { HTTP_STATUS_CODE } from '../core';
 
 const router = express.Router({ mergeParams: true });
 
@@ -14,6 +15,20 @@ router.delete(
   ) => {
     try {
       const { taskId } = req.params;
+
+      if (!taskId) {
+        next(
+          new BaseError(
+            {
+              code: '401',
+              message: 'taskId is not defined',
+            },
+            HTTP_STATUS_CODE.BAD_REQUEST
+          )
+        );
+
+        return;
+      }
 
       const deletedTask = deleteTask(taskId);
 
