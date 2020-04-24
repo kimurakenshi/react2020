@@ -16,16 +16,16 @@ interface Task {
   name: string;
 }
 
-interface TaskListState {
+interface TaskManagerState {
   tasks: Task[];
 }
 
-const initialState: TaskListState = {
+const initialState: TaskManagerState = {
   tasks: [],
 };
 
-export const taskListSlice = createSlice({
-  name: 'taskList',
+export const taskManagerSlice = createSlice({
+  name: 'taskManager',
   initialState,
   reducers: {
     getTasksSuccess: (state, action: PayloadAction<Task[]>) => {
@@ -44,7 +44,7 @@ export const {
   getTasksSuccess,
   getTasksError,
   getCreateTaskSuccess,
-} = taskListSlice.actions;
+} = taskManagerSlice.actions;
 
 export const fetchTasks = (): AppThunk => async (dispatch) => {
   try {
@@ -86,6 +86,6 @@ export const createTask = (name: string): AppThunk => async (dispatch) => {
   }
 };
 
-export const selectTasks = (state: RootState) => state.taskList.tasks;
+export const selectTasks = (state: RootState) => state.taskManager.tasks;
 
-export default taskListSlice.reducer;
+export default taskManagerSlice.reducer;

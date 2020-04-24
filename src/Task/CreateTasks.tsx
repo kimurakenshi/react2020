@@ -2,7 +2,7 @@ import { Box, Button, FormControl, TextField } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { createTask } from './taskListSlice';
+import { createTask } from './taskManagerSlice';
 
 const useStyles = makeStyles((theme) => ({
   container: {

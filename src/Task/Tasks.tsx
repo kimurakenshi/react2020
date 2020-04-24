@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { Page } from '../components';
-import { fetchTasks, selectTasks } from './taskListSlice';
+import { fetchTasks, selectTasks } from './taskManagerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Divider,
