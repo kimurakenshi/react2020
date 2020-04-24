@@ -11,6 +11,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
+  Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -19,6 +20,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import RestoreIcon from '@material-ui/icons/Restore';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import { makeStyles } from '@material-ui/core/styles';
+import CreateTask from './CreateTasks';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -40,6 +42,8 @@ const Tasks = () => {
 
   return (
     <Page title="Tasks">
+      <Typography variant="h6">Create Task</Typography>
+      <CreateTask />
       {taskList && taskList.length > 0 ? (
         <div className={styles.list}>
           <List>

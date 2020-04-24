@@ -13,10 +13,12 @@ interface Task {
 
 interface TaskListState {
   tasks: Task[];
+  hasCreationError: boolean;
 }
 
 const initialState: TaskListState = {
   tasks: [],
+  hasCreationError: false,
 };
 
 export const taskListSlice = createSlice({
@@ -29,10 +31,21 @@ export const taskListSlice = createSlice({
     getTasksError: (state) => {
       state.tasks = [];
     },
+    getCreateTaskSuccess: (state, action: PayloadAction<Task>) => {
+      state.tasks.push(action.payload);
+    },
+    getHasCreateTaskError: (state, action: PayloadAction<boolean>) => {
+      state.hasCreationError = action.payload;
+    },
   },
 });
 
-export const { getTasksSuccess, getTasksError } = taskListSlice.actions;
+export const {
+  getTasksSuccess,
+  getTasksError,
+  getCreateTaskSuccess,
+  getHasCreateTaskError,
+} = taskListSlice.actions;
 
 export const fetchTasks = (): AppThunk => async (dispatch) => {
   try {
@@ -49,6 +62,22 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
   }
 };
 
+export const createTask = (name: string): AppThunk => async (dispatch) => {
+  try {
+    const tasks = await fetchJSON(API_ROUTES.TASK_CREATE, {
+      method: 'POST',
+      body: JSON.stringify({
+        name,
+      }),
+    });
+    dispatch(getCreateTaskSuccess(tasks));
+  } catch (err) {
+    dispatch(getHasCreateTaskError(true));
+  }
+};
+
 export const selectTasks = (state: RootState) => state.taskList.tasks;
+export const selectHasCreationError = (state: RootState) =>
+  state.taskList.hasCreationError;
 
 export default taskListSlice.reducer;
