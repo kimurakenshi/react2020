@@ -1,42 +1,12 @@
 [
   {
-    "name": "otro",
-    "id": "b69b2de3-44a4-491a-be4b-4b506a826ec1",
-    "isCompleted": true
+    "name": "this is another task",
+    "isCompleted": false,
+    "id": "725f4e57-58a8-4eff-8ec7-9cd3cae0f977"
   },
   {
     "name": "asd",
-    "isCompleted": true,
-    "id": "34161311-7f9f-414a-95f8-447088dc08d8"
-  },
-  {
-    "name": "asdasd",
-    "isCompleted": true,
-    "id": "20bce3a9-146e-4de5-a2ec-be1c0a54d825"
-  },
-  {
-    "name": "zz",
-    "isCompleted": true,
-    "id": "2ccfade5-b68b-4d89-bf4f-7006af0d0458"
-  },
-  {
-    "name": "a",
-    "isCompleted": true,
-    "id": "10e94b4f-9dae-420a-8e2d-6397203b4a60"
-  },
-  {
-    "name": "zzz",
     "isCompleted": false,
-    "id": "74648a9f-c983-4c3c-b874-aacb9cc9af3a"
-  },
-  {
-    "name": "asdasdzz",
-    "isCompleted": false,
-    "id": "f5d93769-08eb-41c3-9c72-946432064e30"
-  },
-  {
-    "name": "xxx",
-    "isCompleted": false,
-    "id": "a28daa7f-58e8-443d-830f-ce47b6206d1c"
+    "id": "1d457e74-c87c-4f78-8fa9-dc166a0617e6"
   }
 ]

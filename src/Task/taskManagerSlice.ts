@@ -47,6 +47,9 @@ export const taskManagerSlice = createSlice({
         taskToUpdate.isCompleted = action.payload.isCompleted;
       }
     },
+    getDeleteTaskSuccess: (state, action: PayloadAction<Task>) => {
+      state.tasks = state.tasks.filter((task) => task.id !== action.payload.id);
+    },
   },
 });
 
@@ -55,6 +58,7 @@ export const {
   getTasksError,
   getCreateTaskSuccess,
   getUpdateTaskSuccess,
+  getDeleteTaskSuccess,
 } = taskManagerSlice.actions;
 
 export const fetchTasks = (): AppThunk => async (dispatch) => {
@@ -74,17 +78,17 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
 
 export const createTask = (name: string): AppThunk => async (dispatch) => {
   try {
-    const tasks = await fetchJSON(API_ROUTES.TASK_CREATE, {
+    const task = await fetchJSON(API_ROUTES.TASK_CREATE, {
       method: 'POST',
       body: JSON.stringify({
         name,
       }),
     });
-    dispatch(getCreateTaskSuccess(tasks));
+    dispatch(getCreateTaskSuccess(task));
     dispatch(
       setPageNotification({
         type: NotificationType.SUCCESS,
-        message: `${name} was created successfully.`,
+        message: `"${name}" was created successfully.`,
       })
     );
   } catch (err) {
@@ -102,13 +106,29 @@ export const updateTaskStatus = (
   isCompleted: boolean
 ): AppThunk => async (dispatch) => {
   try {
-    const tasks = await fetchJSON(`${API_ROUTES.TASK}/${taskId}`, {
+    const task = await fetchJSON(`${API_ROUTES.TASK}/${taskId}`, {
       method: 'PUT',
       body: JSON.stringify({
         isCompleted,
       }),
     });
-    dispatch(getUpdateTaskSuccess(tasks));
+    dispatch(getUpdateTaskSuccess(task));
+  } catch (err) {
+    dispatch(
+      setPageNotification({
+        type: NotificationType.ERROR,
+        message: err.message,
+      })
+    );
+  }
+};
+
+export const deleteTask = (taskId: string): AppThunk => async (dispatch) => {
+  try {
+    const task = await fetchJSON(`${API_ROUTES.TASK}/${taskId}`, {
+      method: 'DELETE',
+    });
+    dispatch(getDeleteTaskSuccess(task));
   } catch (err) {
     dispatch(
       setPageNotification({

@@ -1,6 +1,11 @@
 import React, { useEffect, Fragment } from 'react';
 import { Page } from '../components';
-import { fetchTasks, selectTasks, updateTaskStatus } from './taskManagerSlice';
+import {
+  fetchTasks,
+  selectTasks,
+  updateTaskStatus,
+  deleteTask,
+} from './taskManagerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Divider,
@@ -44,6 +49,10 @@ const Tasks = () => {
     dispatch(updateTaskStatus(taskId, isCompleted));
   };
 
+  const deleteTaskHandler = (taskId: string) => {
+    dispatch(deleteTask(taskId));
+  };
+
   return (
     <Page title="Tasks">
       <Typography variant="h6">Create Task</Typography>
@@ -72,6 +81,7 @@ const Tasks = () => {
                       edge="end"
                       aria-label="delete"
                       color="secondary"
+                      onClick={() => deleteTaskHandler(task.id)}
                     >
                       <DeleteIcon />
                     </IconButton>

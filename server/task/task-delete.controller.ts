@@ -1,6 +1,7 @@
 import express from 'express';
 
 import BaseError from '../error/error.base';
+import { deleteTask } from '../db';
 
 const router = express.Router({ mergeParams: true });
 
@@ -12,11 +13,11 @@ router.delete(
     next: express.NextFunction
   ) => {
     try {
-      const params = req.params;
+      const { taskId } = req.params;
 
-      // call task service here.
+      const deletedTask = deleteTask(taskId);
 
-      res.status(200).json({ op: 'Delete' });
+      res.status(200).json(deletedTask);
     } catch (e) {
       next(new BaseError({ code: e.code, message: e.message }, e.statusCode));
     }
