@@ -2,7 +2,7 @@ import express from 'express';
 
 import BaseError from '../error/error.base';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.delete(
   '',
@@ -12,7 +12,7 @@ router.delete(
     next: express.NextFunction
   ) => {
     try {
-      // const { searchText, recordType, maxResults, sortCriteria } = req.body;
+      const params = req.params;
 
       // call task service here.
 

@@ -3,7 +3,7 @@ import express from 'express';
 import BaseError from '../error/error.base';
 import { updateTask } from '../db';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.put(
   '',
