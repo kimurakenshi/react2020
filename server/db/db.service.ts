@@ -4,14 +4,12 @@ const prisma = new PrismaClient();
 
 export const createTask = async (taskName: string) => {
   try {
-    const newTask = await prisma.task.create({
+    return await prisma.task.create({
       data: {
         name: taskName,
         completed: false,
       },
     });
-
-    return newTask;
   } catch (e) {
     throw e;
   } finally {
@@ -21,9 +19,7 @@ export const createTask = async (taskName: string) => {
 
 export const getTasks = async () => {
   try {
-    const tasks = await prisma.task.findMany();
-
-    return tasks;
+    return await prisma.task.findMany();
   } catch (e) {
     throw e;
   } finally {
@@ -33,14 +29,12 @@ export const getTasks = async () => {
 
 export const updateTask = async (taskId: number, completed: boolean) => {
   try {
-    const updatedTask = await prisma.task.update({
+    return await prisma.task.update({
       where: { id: taskId },
       data: {
         completed: completed,
       },
     });
-
-    return updatedTask;
   } catch (e) {
     throw e;
   } finally {
@@ -50,11 +44,9 @@ export const updateTask = async (taskId: number, completed: boolean) => {
 
 export const deleteTask = async (taskId: number) => {
   try {
-    const deletedTask = await prisma.task.delete({
+    return await prisma.task.delete({
       where: { id: taskId },
     });
-
-    return deletedTask;
   } catch (e) {
     throw e;
   } finally {
