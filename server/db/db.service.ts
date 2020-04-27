@@ -1,92 +1,63 @@
-import { v4 as uuidv4 } from 'uuid';
-import * as fs from 'fs';
+import { PrismaClient } from '@prisma/client';
 
-// The db is an static JSON file. This should be replaced with a real DB implementation in the future.
-const DB_FILE_PATH = './server/db/db.json';
+const prisma = new PrismaClient();
 
-const getDB = () => {
+export const createTask = async (taskName: string) => {
   try {
-    const dbRawData = fs.readFileSync(DB_FILE_PATH);
+    const newTask = await prisma.task.create({
+      data: {
+        name: taskName,
+        completed: false,
+      },
+    });
 
-    // @ts-ignore
-    return JSON.parse(dbRawData);
+    return newTask;
   } catch (e) {
-    throw new Error('There was an error while trying to read the DB.');
+    throw e;
+  } finally {
+    await prisma.disconnect();
   }
 };
 
-const persistChanges = (data) => {
+export const getTasks = async () => {
   try {
-    fs.writeFileSync(DB_FILE_PATH, JSON.stringify(data));
+    const tasks = await prisma.task.findMany();
+
+    return tasks;
   } catch (e) {
-    throw new Error(
-      'There was an error while trying to write changes into the DB.'
-    );
+    throw e;
+  } finally {
+    await prisma.disconnect();
   }
 };
 
-export const getTasks = (includeCompletedTasks?: boolean) => {
-  const dbData = getDB();
+export const updateTask = async (taskId: number, completed: boolean) => {
+  try {
+    const updatedTask = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        completed: completed,
+      },
+    });
 
-  if (includeCompletedTasks === undefined) {
-    return dbData;
+    return updatedTask;
+  } catch (e) {
+    throw e;
+  } finally {
+    await prisma.disconnect();
   }
-
-  return dbData.filter((task) => task.isCompleted === includeCompletedTasks);
 };
 
-export const createTask = (taskName: string) => {
-  const dbData = getDB();
+export const deleteTask = async (taskId: number) => {
+  try {
+    const deletedTask = await prisma.task.delete({
+      where: { id: taskId },
+    });
 
-  if (!taskName) {
-    throw new Error('A task name is required to create a new task.');
+    return deletedTask;
+  } catch (e) {
+    throw e;
+  } finally {
+    await prisma.disconnect();
   }
-
-  if (
-    dbData.some((task) => task.name.toLowerCase() === taskName.toLowerCase())
-  ) {
-    throw new Error('There is a task created with the same name.');
-  }
-
-  const newTask = {
-    name: taskName,
-    isCompleted: false,
-    id: uuidv4(),
-  };
-
-  dbData.push(newTask);
-
-  persistChanges(dbData);
-
-  return newTask;
-};
-
-export const updateTask = (taskId, isCompleted: boolean) => {
-  const dbData = getDB();
-
-  const taskToUpdate = dbData.find((task) => task.id === taskId);
-
-  if (!taskToUpdate) {
-    throw new Error("The task to update doesn't exist.");
-  }
-
-  taskToUpdate.isCompleted = isCompleted;
-
-  persistChanges(dbData);
-
-  return taskToUpdate;
-};
-
-export const deleteTask = (taskId: string) => {
-  const dbData = getDB();
-
-  const taskToDelete = dbData.find((task) => task.id === taskId);
-
-  if (!taskToDelete) {
-    throw new Error("The task to delete doesn't exist.");
-  }
-
-  persistChanges(dbData.filter((task) => task.id !== taskId));
-
-  return taskToDelete;
 };

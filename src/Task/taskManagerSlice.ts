@@ -12,7 +12,7 @@ import { API_ROUTES } from '../core/data';
 
 interface Task {
   id: string;
-  isCompleted: boolean;
+  completed: boolean;
   name: string;
 }
 
@@ -44,7 +44,7 @@ export const taskManagerSlice = createSlice({
 
       if (taskToUpdate) {
         taskToUpdate.name = action.payload.name;
-        taskToUpdate.isCompleted = action.payload.isCompleted;
+        taskToUpdate.completed = action.payload.completed;
       }
     },
     getDeleteTaskSuccess: (state, action: PayloadAction<Task>) => {
@@ -103,13 +103,13 @@ export const createTask = (name: string): AppThunk => async (dispatch) => {
 
 export const updateTaskStatus = (
   taskId: string,
-  isCompleted: boolean
+  completed: boolean
 ): AppThunk => async (dispatch) => {
   try {
     const task = await fetchJSON(`${API_ROUTES.TASK}/${taskId}`, {
       method: 'PUT',
       body: JSON.stringify({
-        isCompleted,
+        completed,
       }),
     });
     dispatch(getUpdateTaskSuccess(task));

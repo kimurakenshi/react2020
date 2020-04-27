@@ -45,8 +45,8 @@ const Tasks = () => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
-  const updateTaskStatusHandler = (taskId: string, isCompleted: boolean) => {
-    dispatch(updateTaskStatus(taskId, isCompleted));
+  const updateTaskStatusHandler = (taskId: string, completed: boolean) => {
+    dispatch(updateTaskStatus(taskId, completed));
   };
 
   const deleteTaskHandler = (taskId: string) => {
@@ -65,7 +65,7 @@ const Tasks = () => {
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar>
-                      {task.isCompleted ? (
+                      {task.completed ? (
                         <AssignmentTurnedInIcon />
                       ) : (
                         <AssignmentIcon />
@@ -73,7 +73,7 @@ const Tasks = () => {
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    className={task.isCompleted ? styles.completedTask : ''}
+                    className={task.completed ? styles.completedTask : ''}
                     primary={task.name}
                   />
                   <ListItemSecondaryAction>
@@ -85,7 +85,7 @@ const Tasks = () => {
                     >
                       <DeleteIcon />
                     </IconButton>
-                    {!task.isCompleted && (
+                    {!task.completed && (
                       <IconButton
                         edge="end"
                         aria-label="complete"
@@ -95,7 +95,7 @@ const Tasks = () => {
                         <CheckCircleIcon />
                       </IconButton>
                     )}
-                    {task.isCompleted && (
+                    {task.completed && (
                       <IconButton
                         edge="end"
                         aria-label="restore"

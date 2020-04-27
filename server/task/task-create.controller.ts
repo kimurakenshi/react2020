@@ -15,7 +15,7 @@ router.post(
     try {
       const { name } = req.body;
 
-      const newTask = createTask(name);
+      const newTask = await createTask(name);
 
       res.status(200).json(newTask);
     } catch (e) {

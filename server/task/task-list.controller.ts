@@ -13,7 +13,7 @@ router.post(
     next: express.NextFunction
   ) => {
     try {
-      const taskList = getTasks();
+      const taskList = await getTasks();
 
       res.status(200).json(taskList);
     } catch (e) {

@@ -15,14 +15,14 @@ router.put(
   ) => {
     try {
       const { taskId } = req.params;
-      const { isCompleted } = req.body;
+      const { completed } = req.body;
 
-      if (isCompleted == undefined) {
+      if (completed == undefined) {
         next(
           new BaseError(
             {
               code: '401',
-              message: 'isCompleted value was not provided in the request.',
+              message: 'completed value was not provided in the request.',
             },
             HTTP_STATUS_CODE.BAD_REQUEST
           )
@@ -31,7 +31,7 @@ router.put(
         return;
       }
 
-      const updatedTask = updateTask(taskId, isCompleted);
+      const updatedTask = await updateTask(parseInt(taskId), completed);
 
       res.status(200).json(updatedTask);
     } catch (e) {

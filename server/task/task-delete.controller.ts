@@ -30,7 +30,7 @@ router.delete(
         return;
       }
 
-      const deletedTask = deleteTask(taskId);
+      const deletedTask = await deleteTask(parseInt(taskId));
 
       res.status(200).json(deletedTask);
     } catch (e) {
